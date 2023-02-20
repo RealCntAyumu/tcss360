@@ -1,4 +1,4 @@
-# tcss360
+# Team Violet
 Group repository for TCSS 360 project
 # Group Member
 Abdirizak Abuubakar Ali
