@@ -12,18 +12,28 @@ import java.awt.event.ActionListener;
  */
 public class OverviewPage extends JPanel {
 
-    public OverviewPage() {
+
+    public OverviewPage(Subproject subproject) {
     	
-    	
-    	// Create a header panel
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        JLabel headerLabel = new JLabel("Overview", SwingConstants.CENTER);
+    	setLayout(new BorderLayout());
+        setBackground(Color.WHITE);
+
+        // Create a header panel
+        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        headerPanel.setBorder(new EmptyBorder(20, 0, 20, 0));
+        
+        headerPanel.setBackground(new Color(51, 102, 255));
+        headerPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        JLabel headerLabel = new JLabel("Overview of " + subproject.getName(), SwingConstants.CENTER);
+        headerLabel.setForeground(Color.WHITE);
         headerLabel.setFont(new Font("Helvetica", Font.BOLD, 32));
         headerPanel.add(headerLabel, BorderLayout.CENTER);
 
         JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton backButton = new JButton("Back to Projects");
+        backButton.setBackground(new Color(0, 153, 0));
+        backButton.setForeground(Color.black);
+        backButton.setFocusPainted(false);
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,28 +49,35 @@ public class OverviewPage extends JPanel {
                 contentPane.repaint();
             }
         });
+        backButtonPanel.setBackground(new Color(51, 102, 255));
         backButtonPanel.add(backButton);
-        headerPanel.add(backButtonPanel, BorderLayout.PAGE_END);
-        
+        add(backButtonPanel, BorderLayout.PAGE_END);
+        //headerPanel.add(backButtonPanel, BorderLayout.PAGE_END);
+
         add(headerPanel, BorderLayout.NORTH);
+
         // Create a panel with tabs
         JTabbedPane tabbedPane = new JTabbedPane();
-        add(tabbedPane);
+        add(tabbedPane, BorderLayout.CENTER);
 
         // Create the Overview tab
         JPanel overviewPanel = new JPanel(new BorderLayout());
+        overviewPanel.setBackground(Color.WHITE);
         tabbedPane.addTab("Overview", overviewPanel);
 
         // Create the Budget tab
         JPanel budgetPanel = new JPanel(new BorderLayout());
+        budgetPanel.setBackground(Color.WHITE);
         tabbedPane.addTab("Budget", budgetPanel);
 
         // Create the Item tab
         JPanel itemPanel = new JPanel(new BorderLayout());
+        itemPanel.setBackground(Color.WHITE);
         tabbedPane.addTab("Item", itemPanel);
 
         // Add components to the Overview tab
         JPanel overviewTopPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        overviewTopPanel.setBackground(Color.WHITE);
         overviewTopPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
         overviewPanel.add(overviewTopPanel, BorderLayout.NORTH);
 
@@ -68,9 +85,10 @@ public class OverviewPage extends JPanel {
         JPanel budgetGraphPanel = new JPanel();
         budgetGraphPanel.setBackground(Color.WHITE);
         budgetGraphPanel.setPreferredSize(new Dimension(300, 200));
-        budgetGraphPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        budgetGraphPanel.setBorder(BorderFactory.createLineBorder(new Color(51, 102, 255), 2));
         overviewTopPanel.add(budgetGraphPanel);
-
+        
+        
         // Add the top 3 expenses panel to the top panel
         JPanel expensesPanel = new JPanel(new BorderLayout());
         expensesPanel.setBackground(Color.WHITE);
@@ -78,9 +96,9 @@ public class OverviewPage extends JPanel {
         overviewTopPanel.add(expensesPanel);
 
         JLabel expensesLabel = new JLabel("Top 3 Expenses", SwingConstants.CENTER);
-        expensesLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
+        expensesLabel.setFont(new Font("Helvetica", Font.BOLD, 18));
         expensesPanel.add(expensesLabel, BorderLayout.NORTH);
-
+        
         // Add the expense items to the expenses panel
         JPanel expenseItemsPanel = new JPanel(new GridLayout(3, 1, 0, 10));
         expenseItemsPanel.setBackground(Color.WHITE);
