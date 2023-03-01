@@ -1,4 +1,3 @@
-package teamViolet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,15 +17,15 @@ public class ProjectManager {
 
         // create pages and add them to the main window
         HomePage homePage = new HomePage();
-        SubprojectPage subprojectPage = new SubprojectPage();
-        OverviewPage overviewPage = new OverviewPage();
+        //SubprojectPage subprojectPage = new SubprojectPage();
+        //OverviewPage overviewPage = new OverviewPage();
 
         // create a CardLayout and add pages to it
         CardLayout cardLayout = new CardLayout();
         JPanel contentPane = new JPanel(cardLayout);
         contentPane.add(homePage, "Home");
-        contentPane.add(subprojectPage, "Subproject");
-        contentPane.add(overviewPage, "Overview");
+        //contentPane.add(subprojectPage, "Subproject");
+       // contentPane.add(overviewPage, "Overview");
 
         mainWindow.setContentPane(contentPane);
         mainWindow.setVisible(true);
