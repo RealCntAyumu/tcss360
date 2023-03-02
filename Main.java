@@ -9,9 +9,12 @@ public class Main {
 	    settings.setFirstName(scanner.nextLine());
 	    System.out.print("Enter Email: ");
 	    settings.setEmail(scanner.nextLine());
-	    
-	    
-	    System.out.println("About Screen");
-	    System.out.println("Version: " + About.getVersion());
+	    System.out.print("Enter Information: ");
+	    settings.setInformation(scanner.nextLine());
+
+	    settings.exportSettings();
+	    settings.importSettings();
+	    settings.exportInformation();
+	    settings.importInformation();
 	  }
 }
