@@ -6,7 +6,7 @@ import java.util.Scanner;
  */
 public class Main {
 	  public static void main(String[] args) {
-	    Settings settings = new Settings();
+	    Setting settings = new Setting();
 	    Scanner scanner = new Scanner(System.in);
 
 	    System.out.print("Enter First Name: ");
