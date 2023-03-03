@@ -5,7 +5,7 @@ import java.util.Scanner;
  * @author Abdirizak Ali
  *
  */
-public class Settings {
+public class Setting {
   private String firstName;
   private String email;
   private String information;
