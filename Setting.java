@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/***
+ * 
+ * @author Abdirizak Ali
+ *
+ */
 public class Settings {
   private String firstName;
   private String email;
