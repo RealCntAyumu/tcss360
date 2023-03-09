@@ -7,14 +7,15 @@ import java.awt.event.ActionListener;
 
 /**
  * 
- * @author Ayumu Oshiro 
+ * @author Benji Lee
  *
  */
 public class OverviewPage extends JPanel {
+	private Subproject thisSubproject;
 
 
     public OverviewPage(Subproject subproject) {
-    	
+    	thisSubproject = subproject;
     	setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
@@ -24,7 +25,7 @@ public class OverviewPage extends JPanel {
         
         headerPanel.setBackground(new Color(51, 102, 255));
         headerPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
-        JLabel headerLabel = new JLabel("Overview of " + subproject.getName(), SwingConstants.CENTER);
+        JLabel headerLabel = new JLabel("Overview of " + thisSubproject.getName(), SwingConstants.CENTER);
         headerLabel.setForeground(Color.WHITE);
         headerLabel.setFont(new Font("Helvetica", Font.BOLD, 32));
         headerPanel.add(headerLabel, BorderLayout.CENTER);
@@ -58,6 +59,12 @@ public class OverviewPage extends JPanel {
 
         // Create a panel with tabs
         JTabbedPane tabbedPane = new JTabbedPane();
+     // Change the font and color of the tab labels
+        Font tabFont = new Font("Helvetica", Font.BOLD, 16);
+        Color tabColor = new Color(51, 102, 255);
+        tabbedPane.setFont(tabFont);
+        tabbedPane.setForeground(tabColor);
+        
         add(tabbedPane, BorderLayout.CENTER);
 
         // Create the Overview tab
@@ -66,14 +73,18 @@ public class OverviewPage extends JPanel {
         tabbedPane.addTab("Overview", overviewPanel);
 
         // Create the Budget tab
-        JPanel budgetPanel = new JPanel(new BorderLayout());
+        BudgetScreen budgetPanel = new BudgetScreen();
         budgetPanel.setBackground(Color.WHITE);
         tabbedPane.addTab("Budget", budgetPanel);
 
         // Create the Item tab
         JPanel itemPanel = new JPanel(new BorderLayout());
         itemPanel.setBackground(Color.WHITE);
-        tabbedPane.addTab("Item", itemPanel);
+        tabbedPane.addTab("Documents", itemPanel);
+        
+        //Item screen
+        ItemScreen itempanel = new ItemScreen(thisSubproject);
+        itemPanel.add(itempanel, BorderLayout.CENTER);
 
         // Add components to the Overview tab
         JPanel overviewTopPanel = new JPanel(new GridLayout(1, 2, 10, 10));
