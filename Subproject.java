@@ -5,24 +5,20 @@ import java.util.List;
 /***
  * 
  * @author Benji Lee
+ * @author Abdirizak Ali
  *
  */
+ 
 public class Subproject {
     private String name;
     // list to save documents saved.
     private ArrayList<File> documents;
-    
-    public void setDocuments(ArrayList<File> documents) {
-		this.documents = documents;
-	}
-
-	// list to save items. 
+    // list to save items. 
     private List<Item> items;
-    
-    
+
     public List<Item> getItems() {
-		return items;
-	}
+        return items;
+    }
     
 	public ArrayList<File> getDocuments() {
 		return documents;
@@ -33,33 +29,49 @@ public class Subproject {
 		this.name = name;
 	}
 
-	
-
-   // private List<String> ;
-
+// private List<String> ;
     public Subproject(String name) {
         this.name = name;
         items = new ArrayList<>();
         documents = new ArrayList<>();
-       // this.tasks = new ArrayList<>();
+        // this.tasks = new ArrayList<>();
     }
 
     public String getName() {
         return name;
     }
-
-    public void addDoc(File item) {
-    	documents.add(item);
+    
+    public void addDocument(File document) {
+        documents.add(document);
+    }
+    
+    public ArrayList<File> getDocuments() {
+        return documents;
+    }
+    
+    public List<Item> getItems() {
+        return items;
+    }
+    
+    public void addItem(Item item) {
+        items.add(item);
+    }
     }
 
+public class OverviewPage {
+public void displaySubprojectDetails(Subproject subproject) {
+String subprojectName = subproject.getName();
+List<Item> subprojectItems = subproject.getItems();
+ArrayList<File> subprojectDocuments = subproject.getDocuments();
+    System.out.println("Subproject Name: " + subprojectName);
+    System.out.println("Subproject Items: ");
+    for (Item item : subprojectItems) {
+        System.out.println("- " + item.getName());
+    }
 
-    
-
-   // public List<Task> getTasks() {
-       // return tasks;
-    //}
-
-   // public void addTask(Task task) {
-    //    tasks.add(task);
-    //}
+    System.out.println("Subproject Documents: ");
+    for (File document : subprojectDocuments) {
+        System.out.println("- " + document.getName());
+    }
+}
 }
