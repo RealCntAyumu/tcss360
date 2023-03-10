@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 /**
  * 
  * @author Benji Lee
+ * @author Abdirizak ali
  *
  */
 public class OverviewPage extends JPanel {
@@ -38,21 +39,16 @@ public class OverviewPage extends JPanel {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Go back to the subproject Page screen
-                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(OverviewPage.this);
-                CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
-                cardLayout.show(frame.getContentPane(), "SubprojectPage");
-
-                // Remove the SubprojectPage from the content pane
-                Container contentPane = frame.getContentPane();
-                contentPane.remove(OverviewPage.this);
-                contentPane.revalidate();
-                contentPane.repaint();
+                // show the home page
+                CardLayout cardLayout = (CardLayout) getParent().getLayout();
+                cardLayout.show(getParent(), "Home");
             }
         });
+
         backButtonPanel.setBackground(new Color(51, 102, 255));
         backButtonPanel.add(backButton);
         add(backButtonPanel, BorderLayout.PAGE_END);
+
         //headerPanel.add(backButtonPanel, BorderLayout.PAGE_END);
 
         add(headerPanel, BorderLayout.NORTH);
