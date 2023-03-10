@@ -23,6 +23,9 @@ public class ProjectManager {
         // create a CardLayout and add pages to it
         CardLayout cardLayout = new CardLayout();
         JPanel contentPane = new JPanel(cardLayout);
+        LoginPage loginPage = new LoginPage();
+        contentPane.add(loginPage, "Login");
+        contentPane.add(loginPage, "Login");
         contentPane.add(homePage, "Home");
         //contentPane.add(subprojectPage, "Subproject");
        // contentPane.add(overviewPage, "Overview");
