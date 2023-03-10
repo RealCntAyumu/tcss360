@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 
 /**
  * 
- * @author Ayumu Oshiro(Class Template)
- *
+ * @author Ayumu Oshiro & Abdirizak Ali(Class Template)
+ * 
  */
 public class ProjectManager {
     public static void main(String[] args) {
