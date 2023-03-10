@@ -4,6 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
 
+/***
+ * 
+ * @author Abdirizak Ali
+ *
+ */
+
 public class LoginPage extends JPanel implements ActionListener {
     private JTextField usernameField;
     private JPasswordField passwordField;
