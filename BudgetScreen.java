@@ -16,11 +16,10 @@ public class BudgetScreen extends JPanel {
     private JLabel maxBudget;
     private JButton editButton;
     private JButton addCost;
-    private JButton removeCost;
     private JButton resetButton;
-    private List<Item> itemList;
 
-    public BudgetScreen() {
+
+    public BudgetScreen(Subproject subproject) {
         setLayout(new GridLayout(4, 1));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setBackground(Color.WHITE);
@@ -74,18 +73,11 @@ public class BudgetScreen extends JPanel {
         buttonPanel.add(addCost);
         buttonPanel.add(new JPanel());  //adding empty JPanel for visual
 
-
-        // Button to remove costs
-        removeCost = new JButton("Remove Cost");
-        buttonPanel.add(removeCost);
-        buttonPanel.add(new JPanel()); // adding empty JPanel for visual
-
-        
-
         // Button to change the max value of the budget
-        editButton = new JButton("Edit");
+        editButton = new JButton("Edit Budget");
         buttonPanel.add(editButton);
-
+        buttonPanel.add(new JPanel()); // adding empty JPanel for visual
+        
         // Items Panel
         JPanel itemListPanel = new JPanel();
         itemListPanel.setLayout(new BoxLayout(itemListPanel, BoxLayout.Y_AXIS));
@@ -110,7 +102,6 @@ public class BudgetScreen extends JPanel {
         // Button to reset the budget
         resetButton = new JButton("Reset");
         buttonPanel.add(resetButton);
-        buttonPanel.add(new JPanel()); // adding empty JPanel for visual
 
         //Adding Behavior to Buttons
         // Button to add an item
@@ -129,46 +120,37 @@ public class BudgetScreen extends JPanel {
                 budgetBar.revalidate();
                 budgetBar.repaint();
 
-                JPanel item = new JPanel(new GridLayout(1,3));
-                item.add(new JLabel("Item: " + itemField.getText()));
-                item.add(new JLabel("Cost: $" + cost));
+                Item addItem = new Item(itemField.getText(), cost);
+                subproject.addItem(addItem);
+
+                JPanel addedItemPanel = new JPanel(new GridLayout(1,3));
+                addedItemPanel.add(new JLabel("Item: " + addItem.getName()));
+                addedItemPanel.add(new JLabel("Cost: $" + addItem.getCost()));
+                
+                //Remove Button
                 JButton remove = new JButton("Remove");
                 remove.addActionListener(evt -> {
-                    itemsPanel.remove(item);
+                    itemsPanel.remove(addedItemPanel);
                     budgetBar.setValue(budgetBar.getValue() - cost);
+
                     //Update Progress Bar
                     costLabel.setText("Cost: $" + budgetBar.getValue());
                     budgetBar.revalidate();
                     budgetBar.repaint();
                     itemsPanel.revalidate();
                     itemsPanel.repaint();
+
+                    subproject.removeItem(addItem);
                 });
-                item.add(remove);
-                item.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                itemsPanel.add(item);
+                addedItemPanel.add(remove);
+                addedItemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                itemsPanel.add(addedItemPanel);
 
                 itemField.setText(null);
                 costField.setText(null);
             }
         });
-
-
-        
-        
-
-        //Remove Cost
-        removeCost.addActionListener(e -> {
-            int costValue = Integer.parseInt(JOptionPane.showInputDialog(BudgetScreen.this, "Enter Removed Cost:"));
-            if (budgetBar.getValue() - costValue < 0) {
-                JOptionPane.showMessageDialog(null, "The entered cost is greater than the current total cost. Please enter a lower cost.");
-                return;
-            }
-            budgetBar.setValue(budgetBar.getValue() - costValue);
-            costLabel.setText("Cost: $" + budgetBar.getValue());
-            budgetBar.revalidate();
-            budgetBar.repaint();
-        });
-
 
         //Edit Cost
         editButton.addActionListener(e -> {
@@ -188,6 +170,7 @@ public class BudgetScreen extends JPanel {
                 JOptionPane.showMessageDialog(BudgetScreen.this, "Invalid input!");
             }
         });
+
         // Reset Button
         resetButton.addActionListener(e -> {
             int optionSelect = JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the budget?", "Reset Budget", JOptionPane.OK_CANCEL_OPTION);
@@ -197,9 +180,9 @@ public class BudgetScreen extends JPanel {
                 itemsPanel.removeAll();
                 itemsPanel.revalidate();
                 itemsPanel.repaint();
+                
+                subproject.setItems(new ArrayList<Item>());
             }
         });
-        
-
     }
 }

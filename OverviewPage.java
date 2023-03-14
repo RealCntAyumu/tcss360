@@ -1,9 +1,13 @@
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * 
@@ -57,7 +61,7 @@ public class OverviewPage extends JPanel {
 
         // Create a panel with tabs
         JTabbedPane tabbedPane = new JTabbedPane();
-     // Change the font and color of the tab labels
+        // Change the font and color of the tab labels
         Font tabFont = new Font("Helvetica", Font.BOLD, 16);
         Color tabColor = new Color(51, 102, 255);
         tabbedPane.setFont(tabFont);
@@ -71,18 +75,18 @@ public class OverviewPage extends JPanel {
         tabbedPane.addTab("Overview", overviewPanel);
 
         // Create the Budget tab
-        BudgetScreen budgetPanel = new BudgetScreen();
+        BudgetScreen budgetPanel = new BudgetScreen(thisSubproject);
         budgetPanel.setBackground(Color.WHITE);
         tabbedPane.addTab("Budget", budgetPanel);
 
         // Create the Item tab
-        JPanel itemPanel = new JPanel(new BorderLayout());
-        itemPanel.setBackground(Color.WHITE);
-        tabbedPane.addTab("Documents", itemPanel);
+        JPanel documentPanel = new JPanel(new BorderLayout());
+        documentPanel.setBackground(Color.WHITE);
+        tabbedPane.addTab("Documents", documentPanel);
         
         //Item screen
-        ItemScreen itempanel = new ItemScreen(thisSubproject);
-        itemPanel.add(itempanel, BorderLayout.CENTER);
+        ItemScreen docScreen = new ItemScreen(thisSubproject);
+        documentPanel.add(docScreen, BorderLayout.CENTER);
 
         // Add components to the Overview tab
         JPanel overviewTopPanel = new JPanel(new GridLayout(1, 2, 10, 10));
@@ -113,12 +117,6 @@ public class OverviewPage extends JPanel {
         expenseItemsPanel.setBackground(Color.WHITE);
         expensesPanel.add(expenseItemsPanel, BorderLayout.CENTER);
 
-        for (int i = 0; i < 3; i++) {
-            JLabel expenseItemLabel = new JLabel("Expense Item " + (i + 1), SwingConstants.CENTER);
-            expenseItemLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            expenseItemsPanel.add(expenseItemLabel);
-        }
-
         // Add the item list panel to the overview panel
         JPanel itemListPanel = new JPanel(new BorderLayout());
         itemListPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -139,12 +137,29 @@ public class OverviewPage extends JPanel {
         itemsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         itemListPanel.add(itemsScrollPane, BorderLayout.CENTER);
 
-        for (int i = 0; i < 10; i++) {
-            JLabel itemLabel = new JLabel("Item " + (i + 1));
-            itemLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            itemsPanel.add(itemLabel);
-        }
-        
+        tabbedPane.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                JTabbedPane sourceTabbedPane = (JTabbedPane) e.getSource();
+                if(sourceTabbedPane.getSelectedIndex() == 0) {
+                    //Change Top Expenses
+                    expenseItemsPanel.removeAll();
+                    subproject.sortItems();
+                    List<Item> sortedItems = subproject.getItems().subList(0, 3);
+                    for (Item i : sortedItems) {
+                        JLabel expenseItemLabel = new JLabel(i.getName(), SwingConstants.CENTER);
+                        expenseItemLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                        expenseItemsPanel.add(expenseItemLabel);
+                    }
 
+                    //Change Items Panel
+                    itemsPanel.removeAll();
+                    for (Item item : thisSubproject.getItems()) {
+                    JLabel itemLabel = new JLabel(item.getName());
+                    itemLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    itemsPanel.add(itemLabel);
+                }
+                }
+            }
+        });
     }
 }

@@ -4,7 +4,7 @@
  * @author Abdirizak Ali
  *
  */
-public class Item {
+public class Item implements Comparable<Item>{
 	private String filename;
 	private String filepath;
 	private String name;
@@ -41,6 +41,11 @@ public class Item {
 	public Item(String filename, String filepath) {
 		this.filename = filename;
 		this.filepath = filepath;
+	}
+
+	@Override
+	public int compareTo(Item o) {
+		return o.cost - this.cost;
 	}
 
 }
