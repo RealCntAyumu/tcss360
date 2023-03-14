@@ -1,8 +1,14 @@
 import javax.swing.*;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * 
+ * @author Abdirizak ali
+ * @author Kevin Tra Hua
+ *
+ */
 
 public class BudgetScreen extends JPanel {
     private JProgressBar budgetBar;

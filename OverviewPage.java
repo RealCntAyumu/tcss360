@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 
 /**
  * 
- * @author Benji Lee
  * @author Abdirizak ali
+ * @author Benji Lee
  *
  */
 public class OverviewPage extends JPanel {
@@ -31,23 +31,25 @@ public class OverviewPage extends JPanel {
         headerLabel.setFont(new Font("Helvetica", Font.BOLD, 32));
         headerPanel.add(headerLabel, BorderLayout.CENTER);
 
-        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JButton backButton = new JButton("Back to Projects");
-        backButton.setBackground(new Color(0, 153, 0));
-        backButton.setForeground(Color.black);
-        backButton.setFocusPainted(false);
-        backButton.addActionListener(new ActionListener() {
+
+        JPanel pervButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JButton pervButton = new JButton("Back to Subproject");
+        pervButton.setBackground(new Color(0, 153, 0));
+        pervButton.setForeground(Color.black);
+        pervButton.setFocusPainted(false);
+        pervButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // show the home page
+                // show the perv page
                 CardLayout cardLayout = (CardLayout) getParent().getLayout();
-                cardLayout.show(getParent(), "Home");
+                cardLayout.show(getParent(), "Subproject");
             }
         });
+        
 
-        backButtonPanel.setBackground(new Color(51, 102, 255));
-        backButtonPanel.add(backButton);
-        add(backButtonPanel, BorderLayout.PAGE_END);
+        pervButtonPanel.setBackground(new Color(51, 102, 255));
+        pervButtonPanel.add(pervButton);
+        add(pervButtonPanel, BorderLayout.PAGE_END);
 
         //headerPanel.add(backButtonPanel, BorderLayout.PAGE_END);
 
