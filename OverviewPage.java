@@ -95,7 +95,7 @@ public class OverviewPage extends JPanel {
         overviewPanel.add(overviewTopPanel, BorderLayout.NORTH);
 
         // Add the budget bar graph to the top panel
-        JPanel budgetGraphPanel = new JPanel();
+        JPanel budgetGraphPanel = new JPanel(new GridLayout(2,1));
         budgetGraphPanel.setBackground(Color.WHITE);
         budgetGraphPanel.setPreferredSize(new Dimension(300, 200));
         budgetGraphPanel.setBorder(BorderFactory.createLineBorder(new Color(51, 102, 255), 2));
@@ -141,13 +141,21 @@ public class OverviewPage extends JPanel {
             public void stateChanged(ChangeEvent e) {
                 JTabbedPane sourceTabbedPane = (JTabbedPane) e.getSource();
                 if(sourceTabbedPane.getSelectedIndex() == 0) {
-                    //Change Top Expenses
+                    //Change Top 3 Expenses
                     expenseItemsPanel.removeAll();
                     subproject.sortItems();
-                    List<Item> sortedItems = subproject.getItems().subList(0, 3);
+                    List<Item> sortedItems;
+                    if(subproject.getItems().size() >= 3) {
+                        sortedItems = subproject.getItems().subList(0, 3);
+                    }
+                    else {
+                        sortedItems = subproject.getItems();
+                    }
                     for (Item i : sortedItems) {
-                        JLabel expenseItemLabel = new JLabel(i.getName(), SwingConstants.CENTER);
+                        String expenseItemString = "Item: " + i.getName() + "     Cost: $" + String.valueOf(i.getCost());
+                        JLabel expenseItemLabel = new JLabel(expenseItemString, SwingConstants.LEFT);
                         expenseItemLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                        
                         expenseItemsPanel.add(expenseItemLabel);
                     }
 
@@ -157,6 +165,17 @@ public class OverviewPage extends JPanel {
                     JLabel itemLabel = new JLabel(item.getName());
                     itemLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                     itemsPanel.add(itemLabel);
+
+                    //Change Progress Bar
+                    budgetGraphPanel.removeAll();
+                    JLabel progressBarLabel = new JLabel("Budget", SwingConstants.CENTER);
+                    progressBarLabel.setFont(new Font("Helvetica", Font.BOLD, 18));
+                    budgetGraphPanel.add(progressBarLabel);
+                    JProgressBar budgetBar = new JProgressBar();
+                    budgetBar.setStringPainted(true);
+                    budgetBar.setValue(subproject.getBudget().getValue());
+                    budgetBar.setMaximum(subproject.getBudget().getMaximum());
+                    budgetGraphPanel.add(budgetBar);
                 }
                 }
             }

@@ -17,7 +17,7 @@ public class BudgetScreen extends JPanel {
     private JButton editButton;
     private JButton addCost;
     private JButton resetButton;
-
+    private JPanel itemsPanel;
 
     public BudgetScreen(Subproject subproject) {
         setLayout(new GridLayout(4, 1));
@@ -91,7 +91,7 @@ public class BudgetScreen extends JPanel {
         itemListLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
         itemListPanel.add(itemListLabel, BorderLayout.NORTH);
 
-        JPanel itemsPanel = new JPanel(new GridLayout(10, 1));
+        itemsPanel = new JPanel(new GridLayout(10, 1));
         itemsPanel.setBackground(Color.WHITE);
         itemsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JScrollPane itemsScrollPane = new JScrollPane(itemsPanel);
@@ -99,6 +99,10 @@ public class BudgetScreen extends JPanel {
         itemsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         itemListPanel.add(itemsScrollPane, BorderLayout.CENTER);
 
+        //Load the BudgetScreen again after going from Subprojects Page
+        if (itemsPanel.getComponentCount() == 0) {
+            loadSubproject(subproject);
+        }
         // Button to reset the budget
         resetButton = new JButton("Reset");
         buttonPanel.add(resetButton);
@@ -119,6 +123,7 @@ public class BudgetScreen extends JPanel {
                 costLabel.setText("Cost: $" + budgetBar.getValue());
                 budgetBar.revalidate();
                 budgetBar.repaint();
+                subproject.setBudget(budgetBar);
 
                 Item addItem = new Item(itemField.getText(), cost);
                 subproject.addItem(addItem);
@@ -132,11 +137,11 @@ public class BudgetScreen extends JPanel {
                 remove.addActionListener(evt -> {
                     itemsPanel.remove(addedItemPanel);
                     budgetBar.setValue(budgetBar.getValue() - cost);
-
                     //Update Progress Bar
                     costLabel.setText("Cost: $" + budgetBar.getValue());
                     budgetBar.revalidate();
                     budgetBar.repaint();
+                    subproject.setBudget(budgetBar);
                     itemsPanel.revalidate();
                     itemsPanel.repaint();
 
@@ -166,6 +171,7 @@ public class BudgetScreen extends JPanel {
                 costLabel.setText("Cost: $" + budgetBar.getValue());
                 budgetBar.revalidate();
                 budgetBar.repaint();
+                subproject.setBudget(budgetBar);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(BudgetScreen.this, "Invalid input!");
             }
@@ -181,8 +187,39 @@ public class BudgetScreen extends JPanel {
                 itemsPanel.revalidate();
                 itemsPanel.repaint();
                 
+                subproject.setBudget(budgetBar);
                 subproject.setItems(new ArrayList<Item>());
             }
         });
+    }
+
+    private void loadSubproject(Subproject subproject) {
+        if (subproject.getBudget() != null) {
+            budgetBar.setValue(subproject.getBudget().getValue());
+            budgetBar.setMaximum(subproject.getBudget().getMaximum());
+        }
+        for(Item i : subproject.getItems()) {
+            JPanel addedItemPanel = new JPanel(new GridLayout(1,3));
+            addedItemPanel.add(new JLabel("Item: " + i.getName()));
+            addedItemPanel.add(new JLabel("Cost: $" + i.getCost()));
+            JButton remove = new JButton("Remove");
+                remove.addActionListener(evt -> {
+                    itemsPanel.remove(addedItemPanel);
+                    budgetBar.setValue(budgetBar.getValue() - i.getCost());
+                    //Update Progress Bar
+                    costLabel.setText("Cost: $" + budgetBar.getValue());
+                    budgetBar.revalidate();
+                    budgetBar.repaint();
+                    subproject.setBudget(budgetBar);
+                    itemsPanel.revalidate();
+                    itemsPanel.repaint();
+
+                    subproject.removeItem(i);
+                });
+                addedItemPanel.add(remove);
+                addedItemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                itemsPanel.add(addedItemPanel);
+        }
     }
 }

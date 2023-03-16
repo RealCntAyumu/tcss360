@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JProgressBar;
+
 /***
  * 
  * @author Benji Lee
@@ -15,6 +17,8 @@ public class Subproject {
     private ArrayList<File> documents;
     // list to save items. 
     private ArrayList<Item> items;
+    //Budget Bar Information
+    private JProgressBar budget;
     
     public void setDocuments(ArrayList<File> documents) {
 		this.documents = documents;
@@ -48,6 +52,14 @@ public class Subproject {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+    public void setBudget(JProgressBar inputBudget) {
+        budget = inputBudget;
+    }
+
+    public JProgressBar getBudget() {
+        return budget;
+    }
 
     public Subproject(String name) {
         this.name = name;
