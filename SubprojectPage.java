@@ -47,7 +47,7 @@ public class SubprojectPage extends JPanel {
                 // Go back to the HomePage screen
                 JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(SubprojectPage.this);
                 CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
-                cardLayout.show(frame.getContentPane(), "HomePage");
+                cardLayout.show(frame.getContentPane(), "Home");
 
                 // Remove the SubprojectPage from the content pane
                 
