@@ -13,7 +13,8 @@ import java.util.List;
  * 
  * @author Abdirizak ali
  * @author Benji Lee
- *
+ * @author Kevin Hua
+ * 
  */
 public class OverviewPage extends JPanel {
 	private Subproject thisSubproject;
@@ -54,8 +55,6 @@ public class OverviewPage extends JPanel {
         pervButtonPanel.setBackground(new Color(51, 102, 255));
         pervButtonPanel.add(pervButton);
         add(pervButtonPanel, BorderLayout.PAGE_END);
-
-        //headerPanel.add(backButtonPanel, BorderLayout.PAGE_END);
 
         add(headerPanel, BorderLayout.NORTH);
 
@@ -137,9 +136,11 @@ public class OverviewPage extends JPanel {
         itemsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         itemListPanel.add(itemsScrollPane, BorderLayout.CENTER);
 
+        //Checks whenever the user switches tabs
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 JTabbedPane sourceTabbedPane = (JTabbedPane) e.getSource();
+                //If the user selected the Overview tab, update it with information that was added in budget tab
                 if(sourceTabbedPane.getSelectedIndex() == 0) {
                     //Change Top 3 Expenses
                     expenseItemsPanel.removeAll();

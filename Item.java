@@ -2,47 +2,42 @@
  * 
  * @author Ayumu Oshiro
  * @author Abdirizak Ali
- *
+ * @author Kevin Hua
+ * 
  */
 public class Item implements Comparable<Item>{
-	private String filename;
-	private String filepath;
 	private String name;
     private int cost;
 
-	
+	/**
+	 * Creates an Item that initalizes name and cost with the inputted ones
+	 * @param name
+	 * @param cost
+	 */
     public Item(String name, int cost) {
         this.name = name;
         this.cost = cost;
     }
 
+	/**
+	 * Returns the name of the item
+	 * @return name
+	 */
     public String getName() {
         return name;
     }
 	
-
+	/**
+	 * Gets the cost of the item
+	 * @return cost
+	 */
     public int getCost() {
         return cost;
     }
-	
-	public String getFilename() {
-		return filename;
-	}
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-	public String getFilepath() {
-		return filepath;
-	}
-	public void setFilepath(String filepath) {
-		this.filepath = filepath;
-	}
-	
-	public Item(String filename, String filepath) {
-		this.filename = filename;
-		this.filepath = filepath;
-	}
 
+	 /**
+	  * Method to compare two items, returns the items in descending order.
+	  */
 	@Override
 	public int compareTo(Item o) {
 		return o.cost - this.cost;

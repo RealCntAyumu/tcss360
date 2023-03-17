@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
@@ -19,6 +18,12 @@ public class BudgetScreen extends JPanel {
     private JButton resetButton;
     private JPanel itemsPanel;
 
+    /**
+     * Creates a new BudgetScreen object which initializes all of the Java Swing components in the budget tab.
+     * If there is existing data in the passed subproject, will initialize that data.
+     * Also creates buttons and adds behavior into the buttons whenever the BudgetScreen object is created.
+     * @param subproject
+     */
     public BudgetScreen(Subproject subproject) {
         setLayout(new GridLayout(4, 1));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -103,12 +108,14 @@ public class BudgetScreen extends JPanel {
         if (itemsPanel.getComponentCount() == 0) {
             loadSubproject(subproject);
         }
+        
         // Button to reset the budget
         resetButton = new JButton("Reset");
         buttonPanel.add(resetButton);
 
         //Adding Behavior to Buttons
-        // Button to add an item
+
+        // Add Button
         
         addCost.addActionListener(e -> {
             int optionSelect = JOptionPane.showConfirmDialog(null, itemCostPanel, "Enter Item and Cost", JOptionPane.OK_CANCEL_OPTION);
@@ -193,11 +200,18 @@ public class BudgetScreen extends JPanel {
         });
     }
 
+    /**
+     * Method that runs only when there are 0 components in the items panel. It will then check the subproject object that is passed through
+     * and fill out the existing datat hat was stored in the previous subproject object.
+     * @param subproject
+     */
     private void loadSubproject(Subproject subproject) {
+        //Gets the subproject progress bar if there is existing data
         if (subproject.getBudget() != null) {
             budgetBar.setValue(subproject.getBudget().getValue());
             budgetBar.setMaximum(subproject.getBudget().getMaximum());
         }
+        //Grabs all the items that were previouslly inputted
         for(Item i : subproject.getItems()) {
             JPanel addedItemPanel = new JPanel(new GridLayout(1,3));
             addedItemPanel.add(new JLabel("Item: " + i.getName()));
